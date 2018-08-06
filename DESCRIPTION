@@ -1,0 +1,23 @@
+Package: readsam
+Type: Package
+Title: reads sam inputs and outputs
+Version: 0.0.1.9000
+Date: 2018-07-06
+Authors@R:
+  c(person("Einar", "Hjorleifsson", email = "einarhjorleifsson@gmail.com",role = c("aut", "cre")))
+Maintainer: Einar Hjorleifsson <einar.hjorleifsson@gmail.com>
+Description: Read utilities for sam
+Depends:
+    R (>= 3.1.1)
+Imports:
+    dplyr,
+    magrittr
+License: GPL (>= 2)
+LazyData: TRUE
+URL: http://github.com/einarhjorleifsson/readsam
+BugReports: http://github.com/einarhjorleifsson/readsam/issues
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
