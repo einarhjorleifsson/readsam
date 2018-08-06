@@ -3,24 +3,24 @@ read_retro_sam <- function(retro, ibya) {
   out <- list()
   for(i in 1:length(retro)) {
     out[[i]] <-
-      sam_rby(retro[[i]]) %>%
-      mutate(assyear = i)
+      read_rby_sam(retro[[i]]) %>%
+      dplyr::mutate(assyear = i)
     bio <-
-      ntable(retro[[i]]) %>%
+      stockassessment::ntable(retro[[i]]) %>%
       as.data.frame() %>%
-      mutate(year = rownames(.) %>% as.integer()) %>%
-      gather(age, n, -year, convert = TRUE) %>%
-      left_join(ibya %>% select(year, age, cW)) %>%
-      filter(age %in% 4:14) %>%
-      group_by(year) %>%
-      summarise(bio = sum(n * cW) / 1e3)
+      dplyr::mutate(year = rownames(.) %>% as.integer()) %>%
+      tidyr::gather(age, n, -year, convert = TRUE) %>%
+      dplyr::left_join(ibya %>% select(year, age, cW)) %>%
+      dplyr::filter(age %in% 4:14) %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarise(bio = sum(n * cW) / 1e3)
     out[[i]] <-
       out[[i]] %>%
-      bind_rows(bio %>%
-                  select(year = year, Estimate = bio) %>%
-                  mutate(variable = "bio",
+      dplyr::bind_rows(bio %>%
+                         dplyr::select(year = year, Estimate = bio) %>%
+                         dplyr::mutate(variable = "bio",
                          assyear = i))
 
   }
-  out %>% bind_rows() %>% as_tibble()
+  out %>% dplyr::bind_rows() %>% dplyr::as_tibble()
 }

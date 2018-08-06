@@ -25,10 +25,10 @@ read_ibya <- function(ass, web = TRUE, user = "user3") {
     res[[j]] <-
       stockassessment::read.ices(fil) %>%
       as.data.frame() %>%
-      mutate(year = row.names(.) %>% as.integer()) %>%
-      gather(age, value, -year, convert = TRUE) %>%
-      mutate(variable = var[j]) %>%
-      as_tibble()
+      dplyr::mutate(year = row.names(.) %>% as.integer()) %>%
+      tidyr::gather(age, value, -year, convert = TRUE) %>%
+      dplyr::mutate(variable = var[j]) %>%
+      dplyr::as_tibble()
   }
 
   if(web) {
@@ -50,21 +50,21 @@ read_ibya <- function(ass, web = TRUE, user = "user3") {
     sur[[i]] <-
       x[[i]] %>%
       as.data.frame() %>%
-      mutate(year = row.names(.) %>% as.integer()) %>%
-      gather(age, value, -year, convert = TRUE) %>%
-      mutate(variable = paste0("oU", i)) %>%
-      as_tibble()
+      dplyr::mutate(year = row.names(.) %>% as.integer()) %>%
+      tidyr::gather(age, value, -year, convert = TRUE) %>%
+      dplyr::mutate(variable = paste0("oU", i)) %>%
+      dplyr::as_tibble()
   }
 
   sur <-
     sur %>%
-    bind_rows()
+    dplyr::bind_rows()
 
   res %>%
-    bind_rows() %>%
-    bind_rows(sur) %>%
-    spread(variable, value) %>%
-    as_tibble() %>%
+    dplyr::bind_rows() %>%
+    dplyr::bind_rows(sur) %>%
+    tidyr::spread(variable, value) %>%
+    dplyr::as_tibble() %>%
     return()
 
 }
